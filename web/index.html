@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cielo sopra di me</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="cielo.css">
+</head>
+<body>
+<canvas id="cielo" aria-label="Il cielo sopra di te: aerei, satelliti e stazioni spaziali"></canvas>
+
+<section id="orologio" class="pannello alto sinistra">
+  <div id="ora" class="grande">--:--</div>
+  <div id="data"></div>
+  <div id="luogo" class="tenue"></div>
+</section>
+
+<section id="conteggi" class="pannello alto destra" aria-live="polite"></section>
+
+<section id="dettaglio" class="pannello basso sinistra"></section>
+
+<section id="stazioni" class="pannello basso destra"></section>
+
+<button id="apri-impostazioni" class="comando" type="button" title="Impostazioni (S)" aria-label="Impostazioni">⚙</button>
+
+<dialog id="impostazioni">
+  <form method="dialog" id="modulo">
+    <h2>Impostazioni</h2>
+    <p id="avviso-posizione" class="avviso" hidden>Dimmi dove sei: senza posizione non so cosa c'è sopra di te.</p>
+
+    <fieldset>
+      <legend>Dove sei</legend>
+      <label>Latitudine <input name="lat" type="number" step="any" min="-90" max="90" placeholder="45.4642"></label>
+      <label>Longitudine <input name="lon" type="number" step="any" min="-180" max="180" placeholder="9.1900"></label>
+      <label>Quota sul mare (m) <input name="quota" type="number" step="1" min="-500" max="9000"></label>
+      <button type="button" id="usa-dispositivo">Usa la posizione di questo dispositivo</button>
+      <p id="esito-dispositivo" class="tenue"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Cosa mostrare</legend>
+      <label>Aerei entro (km) <input name="raggioKm" type="number" min="10" max="460" step="10"></label>
+      <label>Satelliti
+        <select name="satelliti">
+          <option value="stazioni">Solo le stazioni spaziali</option>
+          <option value="luminosi">Stazioni e i satelliti più luminosi</option>
+          <option value="tutti">Tutti i satelliti attivi</option>
+        </select>
+      </label>
+      <label class="spunta"><input name="starlink" type="checkbox"> Anche Starlink (sono più della metà)</label>
+      <label>Elevazione minima <output id="valore-elevMin"></output>
+        <input name="elevMin" type="range" min="0" max="30" step="1">
+      </label>
+      <label class="spunta"><input name="scie" type="checkbox"> Scia dietro agli aerei</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Proiettore</legend>
+      <label>Vista
+        <select name="vista">
+          <option value="basso">Dal basso: sdraiato, guardando il soffitto</option>
+          <option value="alto">Dall'alto: come una carta geografica</option>
+        </select>
+      </label>
+      <label>Dove sta il Nord sul soffitto <output id="valore-nord"></output>
+        <input name="nord" type="range" min="0" max="359" step="1">
+      </label>
+      <p class="tenue">Ruota finché la N disegnata punta verso il nord vero (la bussola del telefono aiuta). Di giorno il Sole disegnato deve stare dalla parte della finestra da cui entra la luce.</p>
+      <label>Grandezza dei testi <output id="valore-testo"></output>
+        <input name="testo" type="range" min="0.5" max="3" step="0.1">
+      </label>
+    </fieldset>
+
+    <p class="tenue">Tasti: S impostazioni · F schermo intero · ← → ruota il Nord · + − testi · Esc chiude. Un clic su un aereo o un satellite ne mostra i dettagli.</p>
+
+    <div class="pulsanti">
+      <button type="button" id="schermo-intero">Schermo intero</button>
+      <button value="annulla" formnovalidate>Annulla</button>
+      <button value="salva" class="principale">Salva</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="vendor/satellite.min.js"></script>
+<script src="geometria.js"></script>
+<script src="cielo.js"></script>
+</body>
+</html>

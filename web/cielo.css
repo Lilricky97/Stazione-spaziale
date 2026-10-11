@@ -1,0 +1,108 @@
+/* Su un proiettore il nero non manda luce: lo sfondo resta nero e i testi chiari. */
+:root {
+  --testo: 1;
+  --fondo-pannello: rgba(0, 0, 0, 0.62);
+  --chiaro: #e9f0ff;
+  --tenue: #8ea3c7;
+  --aerei: #ffbf5a;
+  --stazioni: #7ef0ff;
+  --accento: #6aa2ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: var(--chiaro);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body.quieto, body.quieto canvas { cursor: none; }
+
+canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+.pannello {
+  position: fixed;
+  max-width: var(--larghezza-pannello, min(34vw, 30em));
+  padding: 0.6em 0.8em;
+  border-radius: 0.6em;
+  background: var(--fondo-pannello);
+  font-size: calc(clamp(11px, 1.55vmin, 28px) * var(--testo));
+  line-height: 1.35;
+  pointer-events: none;
+}
+.pannello:empty { display: none; }
+.alto { top: 1.2vmin; }
+.basso { bottom: 1.2vmin; }
+.sinistra { left: 1.2vmin; }
+.destra { right: 1.2vmin; text-align: right; }
+
+.grande { font-size: 2.4em; font-weight: 600; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.grande small { font-size: 0.45em; color: var(--tenue); }
+.tenue { color: var(--tenue); }
+.titolo { font-weight: 700; font-size: 1.15em; }
+.titolo.aereo { color: var(--aerei); }
+.titolo.stazione { color: var(--stazioni); }
+.etichetta { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75em; color: var(--tenue); }
+.allarme { color: #ff6b6b; font-weight: 700; }
+.errore { color: #ffb4b4; }
+.riga + .riga { margin-top: 0.45em; }
+
+.comando {
+  position: fixed;
+  top: 50%;
+  right: 1.2vmin;
+  transform: translateY(-50%);
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid #2a3b5c;
+  border-radius: 50%;
+  background: #050a14;
+  color: var(--chiaro);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: opacity 0.6s;
+}
+body.quieto .comando { opacity: 0; pointer-events: none; }
+
+dialog {
+  width: min(36rem, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 1.2rem 1.4rem;
+  border: 1px solid #2a3b5c;
+  border-radius: 0.8rem;
+  background: #060b16;
+  color: var(--chiaro);
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+dialog h2 { margin: 0 0 0.6rem; font-size: 1.3rem; }
+fieldset { border: 1px solid #1d2a44; border-radius: 0.5rem; margin: 0 0 0.9rem; padding: 0.6rem 0.8rem 0.8rem; }
+legend { color: var(--tenue); padding: 0 0.3rem; }
+label { display: block; margin: 0.45rem 0; }
+label input:not([type=checkbox]), label select { display: block; width: 100%; margin-top: 0.2rem; }
+label.spunta { display: flex; gap: 0.5rem; align-items: center; }
+input, select, button {
+  font: inherit;
+  color: inherit;
+  background: #0b1424;
+  border: 1px solid #2a3b5c;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.5rem;
+}
+input[type=range] { padding: 0; }
+button { cursor: pointer; }
+button.principale { background: var(--accento); border-color: var(--accento); color: #000; font-weight: 600; }
+output { float: right; color: var(--tenue); }
+.avviso { color: var(--aerei); font-weight: 600; }
+.pulsanti { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; }
+dialog p { margin: 0.4rem 0; font-size: 0.9rem; }

@@ -1,0 +1,9 @@
+# Elementi orbitali scaricati da CelesTrak
+cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
